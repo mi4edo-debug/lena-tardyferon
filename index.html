@@ -88,15 +88,18 @@ border:2px solid #3498db;
 }
 
 .full{
-background:#d4edda;
+border-left:4px solid #27ae60;
+background:white;
 }
 
 .partial{
-background:#fff3cd;
+border-left:4px solid #f1c40f;
+background:white;
 }
 
 .missed{
-background:#f8d7da;
+border-left:4px solid #e74c3c;
+background:white;
 }
 
 .day-number{
@@ -217,6 +220,38 @@ status="partial";
 div.className=`day ${status}`;
 
 const today=new Date();
+  const todayString =
+`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+
+const todayMorning =
+localStorage.getItem(
+storageKey(todayString,"morning")
+)==="true";
+
+const todayEvening =
+localStorage.getItem(
+storageKey(todayString,"evening")
+)==="true";
+
+const morningBlock =
+document.getElementById("todayMorning");
+
+const eveningBlock =
+document.getElementById("todayEvening");
+
+if(morningBlock){
+morningBlock.innerHTML =
+todayMorning
+? "🌅 Утренний приём ✅"
+: "🌅 Утренний приём ⬜";
+}
+
+if(eveningBlock){
+eveningBlock.innerHTML =
+todayEvening
+? "🌙 Вечерний приём ✅"
+: "🌙 Вечерний приём ⬜";
+}
 
 if(
 today.getDate()===day &&
