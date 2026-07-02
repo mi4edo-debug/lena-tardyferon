@@ -273,7 +273,10 @@ overflow:auto;
 <div id="streakStat" class="stat-value">0</div>
 <div class="stat-label">🔥 Серия</div>
 </div>
-
+<div class="stat">
+<div id="courseDayStat" class="stat-value">1</div>
+<div class="stat-label">💊 День курса</div>
+</div>
 </div>
 
 <div class="card">
@@ -368,7 +371,10 @@ class="save-btn"
 <label>Вечер до</label>
 <input id="eveningTo" type="time" value="22:00">
 </div>
-
+<div class="form-group">
+<label>Дата начала курса</label>
+<input id="courseStartDate" type="date">
+</div>
 <button
 id="saveSettings"
 class="save-btn"
@@ -720,7 +726,12 @@ document.getElementById(
 "eveningTo"
 ).value
 );
-
+localStorage.setItem(
+"courseStartDate",
+document.getElementById(
+"courseStartDate"
+).value
+);
 alert("Настройки сохранены");
 
 }
@@ -787,6 +798,44 @@ localStorage.getItem(
 }
 
 loadSavedData();
+document.getElementById(
+"courseStartDate"
+).value =
+localStorage.getItem(
+"courseStartDate"
+) || "";
+function updateCourseDay(){
+
+const startDate =
+localStorage.getItem(
+"courseStartDate"
+);
+
+if(!startDate){
+return;
+}
+
+const start =
+new Date(startDate);
+
+const today =
+new Date();
+
+const diff =
+Math.floor(
+(today - start) /
+(1000*60*60*24)
+);
+
+document.getElementById(
+"courseDayStat"
+).innerText =
+diff + 1;
+
+}
+loadSavedData();
+
+updateCourseDay();
 
 renderCalendar();
 
